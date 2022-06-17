@@ -1,24 +1,48 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState, useRef } from 'react';
+import { Container, List } from './styles'
+
+// const element = document.getElementById('Done').style.textDecorationLine = 'none';
 
 function App() {
+
+
+  const [things, setThinghs] = useState([])
+  const [done, setDone] = useState()
+  const inputList = useRef()
+
+  function toDo() {
+    setThinghs([...things, { id: Math.random(), frase: inputList.current.value }])
+    console.log(things)
+  }
+
+  function deleteItem(id) {
+    let filtered = things.filter((item) => item.id !== id)
+    console.log(filtered)
+    setThinghs(filtered)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <Container>
+      <header>
+        <input placeholder="things to do" className='mainInput' ref={inputList} required />
+        <button className="button" type='const name = new type(arguments);' onClick={toDo}>Launch </button>
       </header>
-    </div>
+      <div className="container" >
+        <ul >
+          {things.map((thing) => (
+            < List key={thing.id} >
+
+
+              <input className='checkbox' type='checkbox' />
+              <p id='Done'>{thing.frase}</p>
+
+              <button className="btn-icon" onClick={() => deleteItem(thing.id)}>   <i className='bx bxs-trash'></i> </button>
+            </List>
+          ))}
+        </ul>
+      </div>
+
+    </Container>
   );
 }
 
